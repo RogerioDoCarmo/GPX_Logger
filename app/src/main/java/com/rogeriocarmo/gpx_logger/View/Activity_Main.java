@@ -1,6 +1,7 @@
 package com.rogeriocarmo.gpx_logger.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.rogeriocarmo.gpx_logger.R;
 
 import android.os.Bundle;
 
