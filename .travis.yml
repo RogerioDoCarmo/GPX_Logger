@@ -1,3 +1,4 @@
+jdk: oraclejdk8
 language: android
 dist: precise
 
@@ -12,6 +13,12 @@ android:
     - extra-google-m2repository
     - extra-android-m2repository
     - sys-img-armeabi-v7a-android-22
+
+licenses: 
+    - android-sdk-preview-license-52d11cd2
+    - android-sdk-license-.+
+    - google-gdk-license-.+
+    - android-sdk-license-c81a61d9
 
 before_script:
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a -c 32M
