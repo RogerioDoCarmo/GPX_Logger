@@ -2,16 +2,16 @@ language: android
 android:
   components:
     - build-tools-29.0.0
-    - $ANDROID_TARGET
+    - android-24
     - sys-img-armeabi-v7a-$ANDROID_TARGET
     - extra-android-support
     - extra-android-m2repository
     - extra-google-m2repository
 env:
   matrix:
-    - ANDROID_TARGET=android-29  ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-24  ANDROID_ABI=armeabi-v7a
 before_script:
-  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+  - echo no | android create avd --force -n test -t 24 --abi armeabi-v7a
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
