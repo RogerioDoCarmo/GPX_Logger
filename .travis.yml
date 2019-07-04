@@ -48,8 +48,8 @@ cache:
 script:
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
-  - adb logcat -c
-  - adb logcat &
+  #- adb logcat -c
+  #- adb logcat &
   - ./gradlew connectedAndroidTest
   - adb emu kill
   #./gradlew build connectedCheck --stacktrace
