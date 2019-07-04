@@ -1,3 +1,6 @@
+language: android
+dist: precise
+
 android:
   components:
     - tools
