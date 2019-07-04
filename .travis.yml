@@ -20,7 +20,18 @@ before_script:
   - sleep 180
   - adb devices
   - adb shell input keyevent 82 &
+# Adicionado
+before_cache: 
+  - "rm -f $HOME/.gradle/caches/modules-2/modules-2.lock"
+before_install: 
+  - "chmod +x gradlew"
+cache: 
+  directories: 
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+# Adicionado
 
 script:
-   - ./gradlew ExampleInstrumentedTest
-   - ./gradlew build checkstyle connectedCheck -PdisablePreDex
+  ./gradlew build connectedCheck --stacktrace
+   #- ./gradlew ExampleInstrumentedTest
+   #- ./gradlew build checkstyle connectedCheck -PdisablePreDex
