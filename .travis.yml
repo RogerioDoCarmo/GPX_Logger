@@ -1,5 +1,6 @@
 jdk: oraclejdk8
 language: android
+sudo: false
 dist: precise
 
 android:
@@ -29,9 +30,9 @@ before_script:
   - adb shell input keyevent 82 &
 # Adicionado
 before_cache: 
-  - "rm -f $HOME/.gradle/caches/modules-2/modules-2.lock"
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 before_install: 
-  - "chmod +x gradlew"
+  - chmod +x gradlew
 cache: 
   directories: 
     - $HOME/.gradle/caches/
@@ -39,9 +40,15 @@ cache:
 
 env: 
   matrix: 
-    - "ANDROID_TARGET=android-22  ANDROID_ABI=armeabi-v7a"
+    - ANDROID_TARGET=android-22  ANDROID_ABI=armeabi-v7a
 
 script:
-  ./gradlew build connectedCheck --stacktrace
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+  - adb logcat -c
+  - adb logcat &
+  - ./gradlew connectedAndroidTest
+  - adb emu kill
+  #./gradlew build connectedCheck --stacktrace
    #- ./gradlew ExampleInstrumentedTest
    #- ./gradlew build checkstyle connectedCheck -PdisablePreDex
