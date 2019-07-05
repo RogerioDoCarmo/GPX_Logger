@@ -6,3 +6,5 @@
 [![Build Status](https://travis-ci.org/RogerioDoCarmo/GPX_Logger.svg?branch=master)](https://travis-ci.org/RogerioDoCarmo/GPX_Logger)
 
 # GPX_Logger
+
+An app to create .gpx files from an smartphone with Android.

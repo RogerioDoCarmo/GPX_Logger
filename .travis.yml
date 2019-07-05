@@ -55,6 +55,8 @@ script:
   #- adb logcat &
   - ./gradlew connectedAndroidTest
   - adb emu kill
+  - echo "Travis branch is $TRAVIS_BRANCH"
+  - echo "Travis branch is in pull request $TRAVIS_PULL+REQUEST"
   #./gradlew build connectedCheck --stacktrace
    #- ./gradlew ExampleInstrumentedTest
    #- ./gradlew build checkstyle connectedCheck -PdisablePreDex
