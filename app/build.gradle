@@ -12,7 +12,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    // LINK OPTIONS!
+    // LINK OPTIONS !!!
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
@@ -20,6 +20,11 @@ android {
     }
 
     buildTypes {
+        // HABILITAR RELATÓRIOS DE COBERTURA DE CÓDIGO !!!
+        debug {
+            testCoverageEnabled true
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
