@@ -3,6 +3,6 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/RogerioDoCarmo/GPX_Logger/badge.svg?branch=master)](https://coveralls.io/github/RogerioDoCarmo/GPX_Logger?branch=master)
 
-![TravisCI Build Status](https://travis-ci.org/RogerioDoCarmo/GPX_Logger.svg?branch=master)
+[![Build Status](https://travis-ci.org/RogerioDoCarmo/GPX_Logger.svg?branch=master)](https://travis-ci.org/RogerioDoCarmo/GPX_Logger)
 
 # GPX_Logger
