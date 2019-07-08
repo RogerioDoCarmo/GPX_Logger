@@ -6,4 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".View.Activity_Main">
 
+    <TextView
+        android:id="@+id/textContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="# COORDENADAS"
+        tools:layout_editor_absoluteX="175dp"
+        tools:layout_editor_absoluteY="209dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
