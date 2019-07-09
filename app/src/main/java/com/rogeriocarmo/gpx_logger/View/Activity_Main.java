@@ -15,7 +15,11 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.method.ScrollingMovementMethod;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 
@@ -23,12 +27,46 @@ public class Activity_Main extends AppCompatActivity {
 
     private LocationManager locationManager = null;
     private LocationListener locationListener = null;
+
     int PERMISSION_LOCATION_REQUEST_CODE = 9;
 
-    StringBuilder text = new StringBuilder();
-
-
     TextView txtContent = null;
+    Button btnShow = null;
+
+    private void addMessage(String msg) {
+        txtContent.append(msg + "\n");
+    }
+
+    private void getLastKnowLocation() {
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    Activity#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for Activity#requestPermissions for more details.
+
+            Toast.makeText(getApplicationContext(), "Permissão necessária!!!", Toast.LENGTH_SHORT).show();
+
+            return;
+        }
+
+        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+        if (location == null) {
+            Toast.makeText(getApplicationContext(), "Última localização desconhecida!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        addMessage(String.format("%s", new DecimalFormat("###.####").format(location.getTime())) + "; " +
+                String.format("%s", new DecimalFormat("###.###").format(location.getLatitude())) + "; " +
+                String.format("%s", new DecimalFormat("###.###").format(location.getLongitude())) + "; " +
+                String.format("%s", new DecimalFormat("###.###").format(location.getAltitude())) + "; "
+        );
+
+        Toast.makeText(getApplicationContext(), "Ultima localizacao conhecida!", Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +77,31 @@ public class Activity_Main extends AppCompatActivity {
                 getSystemService(Context.LOCATION_SERVICE);
 
         txtContent = findViewById(R.id.textContent);
+        txtContent.setMovementMethod(new ScrollingMovementMethod());
+
+        btnShow = findViewById(R.id.btnShow);
+        btnShow.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    Activity#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for Activity#requestPermissions for more details.
+                    Toast.makeText(getApplicationContext(), "Permissão requerida!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                getLastKnowLocation();
+
+                locationManager.requestLocationUpdates(LocationManager
+                        .GPS_PROVIDER, 1000, 1, locationListener);
+            }
+        });
 
         if (displayGpsStatus()) {
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -52,22 +115,18 @@ public class Activity_Main extends AppCompatActivity {
                 //return;
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_LOCATION_REQUEST_CODE);
-
-
             }
 
-            text.append("Time (UTC); Latitude (GMS); Longitude (GMS); Altitude (m)  ");
+            addMessage("Time (UTC); Latitude (GMS); Longitude (GMS); Altitude (m);  ");
 
             locationListener = new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
-                    text.append("\n" + String.format("%s", new DecimalFormat("###.####").format(location.getTime())) + "; " +
+                    addMessage( String.format("%s", new DecimalFormat("###.####").format(location.getTime())) + "; " +
                                        String.format("%s", new DecimalFormat("###.###").format(location.getLatitude())) + "; " +
                                        String.format("%s", new DecimalFormat("###.###").format(location.getLongitude())) + "; " +
                                        String.format("%s", new DecimalFormat("###.###").format(location.getAltitude())) + "; "
                     );
-
-                    txtContent.setText(text.toString());
                 }
 
                 @Override
