@@ -16,6 +16,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,15 +27,21 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+import Controller.GPXparser;
+import Model.GPX_Structure;
+
 public class Activity_Main extends AppCompatActivity {
 
     private LocationManager locationManager = null;
     private LocationListener locationListener = null;
 
+    GPX_Structure gpx_structure = new GPX_Structure();
+
     int PERMISSION_LOCATION_REQUEST_CODE = 9;
 
     TextView txtContent = null;
     Button btnShow = null;
+
 
     private void addMessage(String msg) {
         txtContent.append(msg + "\n");
@@ -110,6 +117,10 @@ public class Activity_Main extends AppCompatActivity {
 
                 locationManager.requestLocationUpdates(LocationManager
                         .GPS_PROVIDER, 1000, 1, locationListener);
+
+                GPXparser parser = new GPXparser(gpx_structure);
+                Log.i("TESTE","\n\n" + parser.getFullText());
+
             }
         });
 
@@ -132,12 +143,6 @@ public class Activity_Main extends AppCompatActivity {
             locationListener = new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
-//                    addMessage( String.format("%s", new DecimalFormat("###.####").format(location.getTime())) + "; " +
-//                                       String.format("%s", new DecimalFormat("###.###").format(location.getLatitude())) + "; " +
-//                                       String.format("%s", new DecimalFormat("###.###").format(location.getLongitude())) + "; " +
-//                                       String.format("%s", new DecimalFormat("###.###").format(location.getAltitude())) + "; "
-//                    );
-
                     Date date = new Date(location.getTime());
                     SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
                     format.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -149,6 +154,8 @@ public class Activity_Main extends AppCompatActivity {
                             String.format("%s", new DecimalFormat("###.###").format(location.getAltitude())) + "; "
                     );
 
+                    /* Criando o arquivo GPX TODO: SEPARAR EM UMA FUNÇÃO*/
+                    gpx_structure.add_GPXpoint(location.getTime(), (float)location.getLatitude(),  (float)location.getLongitude(), location.getAltitude()); // TODO REVIEW TYPES
                 }
 
                 @Override
