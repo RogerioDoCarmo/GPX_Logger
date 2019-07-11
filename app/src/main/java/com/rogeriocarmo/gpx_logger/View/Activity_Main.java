@@ -22,6 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class Activity_Main extends AppCompatActivity {
 
@@ -59,11 +62,18 @@ public class Activity_Main extends AppCompatActivity {
             return;
         }
 
-        addMessage(String.format("%s", new DecimalFormat("###.####").format(location.getTime())) + "; " +
+        Date date = new Date(location.getTime());
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+        format.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String time = format.format(date);
+
+        addMessage(time + "; " +
                 String.format("%s", new DecimalFormat("###.###").format(location.getLatitude())) + "; " +
                 String.format("%s", new DecimalFormat("###.###").format(location.getLongitude())) + "; " +
                 String.format("%s", new DecimalFormat("###.###").format(location.getAltitude())) + "; "
         );
+
+
 
         Toast.makeText(getApplicationContext(), "Ultima localizacao conhecida!", Toast.LENGTH_SHORT).show();
     }
@@ -122,11 +132,23 @@ public class Activity_Main extends AppCompatActivity {
             locationListener = new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
-                    addMessage( String.format("%s", new DecimalFormat("###.####").format(location.getTime())) + "; " +
-                                       String.format("%s", new DecimalFormat("###.###").format(location.getLatitude())) + "; " +
-                                       String.format("%s", new DecimalFormat("###.###").format(location.getLongitude())) + "; " +
-                                       String.format("%s", new DecimalFormat("###.###").format(location.getAltitude())) + "; "
+//                    addMessage( String.format("%s", new DecimalFormat("###.####").format(location.getTime())) + "; " +
+//                                       String.format("%s", new DecimalFormat("###.###").format(location.getLatitude())) + "; " +
+//                                       String.format("%s", new DecimalFormat("###.###").format(location.getLongitude())) + "; " +
+//                                       String.format("%s", new DecimalFormat("###.###").format(location.getAltitude())) + "; "
+//                    );
+
+                    Date date = new Date(location.getTime());
+                    SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+                    format.setTimeZone(TimeZone.getTimeZone("UTC"));
+                    String time = format.format(date);
+
+                    addMessage(time + "; " +
+                            String.format("%s", new DecimalFormat("###.###").format(location.getLatitude())) + "; " +
+                            String.format("%s", new DecimalFormat("###.###").format(location.getLongitude())) + "; " +
+                            String.format("%s", new DecimalFormat("###.###").format(location.getAltitude())) + "; "
                     );
+
                 }
 
                 @Override
