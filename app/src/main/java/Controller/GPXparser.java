@@ -24,8 +24,12 @@ public class GPXparser {
         return  textContent.toString();
     }
 
+    public StringBuilder getStringBuilder() {
+        return  this.textContent;
+    }
+
     public void make_header() {
-        String standard_header = " <?xml version=\"1.0\"?>\n" +
+        String standard_header = "<?xml version=\"1.0\"?>\n" +
                 "<gpx version=\"1.0\" creator=\"CREATOR_FIELD\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" +
                 " xmlns=\"http://www.topografix.com/GPX/1/0\" xsi:schemaLocation=\"http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd\">";
 
@@ -53,6 +57,7 @@ public class GPXparser {
         textContent.append("<name><![CDATA[CITY_FIELD]]></name>".replace("CITY_FIELD", cidade));
         textContent.append("\n");
         textContent.append("<trkseg>");
+        textContent.append("\n");
 
         for (int i = 0; i < gpx_structure.listPoints.size(); i++) { // TODO REMOVE PUBLIC VARIABLE
 

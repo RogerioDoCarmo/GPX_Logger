@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+import Controller.FileHandler;
 import Controller.GPXparser;
 import Model.GPX_Structure;
 
@@ -120,6 +121,9 @@ public class Activity_Main extends AppCompatActivity {
 
                 GPXparser parser = new GPXparser(gpx_structure);
                 Log.i("TESTE","\n\n" + parser.getFullText());
+
+                FileHandler fileHandler = new FileHandler();
+                fileHandler.WriteText2Interal(getApplicationContext(),parser.getStringBuilder(),"TESTE01.gpx");
 
             }
         });
