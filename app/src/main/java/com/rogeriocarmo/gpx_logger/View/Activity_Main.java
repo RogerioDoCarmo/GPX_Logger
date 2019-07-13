@@ -123,7 +123,9 @@ public class Activity_Main extends AppCompatActivity {
                 Log.i("TESTE","\n\n" + parser.getFullText());
 
                 FileHandler fileHandler = new FileHandler();
-                fileHandler.WriteText2Interal(getApplicationContext(),parser.getStringBuilder(),"TESTE01.gpx");
+                fileHandler.WriteText2Internal(getApplicationContext(),parser.getStringBuilder(),"TESTE02.gpx");
+
+                fileHandler.ShareFileURI(getApplicationContext(),"TESTE02.gpx");
 
             }
         });

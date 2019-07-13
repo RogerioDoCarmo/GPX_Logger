@@ -52,6 +52,7 @@ public class GPXparser {
     @SuppressLint("DefaultLocale")
     public void make_body () {
 
+        textContent.append("\n");
         textContent.append("<trk>");
         textContent.append("\n");
         textContent.append("<name><![CDATA[CITY_FIELD]]></name>".replace("CITY_FIELD", cidade));
